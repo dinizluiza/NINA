@@ -1,0 +1,15 @@
+{
+    "name": "websocket-app",
+    "version": "1.0.0",
+    "description": "A WebSocket app that sends periodic notifications",
+    "main": "notifier.js",
+    "dependencies": {
+        "notifier": "^0.2.0",
+        "ws": "^8.5.0"
+    },
+    "scripts": {
+        "start": "node notifier.js"
+    },
+    "author": "Yves Emmanuel",
+    "license": "MIT"
+}

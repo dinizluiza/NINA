@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "start": "node db.js && json-server --watch db.json"
+  },
+  "devDependencies": {
+    "csvtojson": "^2.0.10",
+    "json-server": "^0.17.2"
+  },
+  "dependencies": {
+    "uuid": "^9.0.1"
+  }
+}
