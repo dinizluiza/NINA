@@ -62,6 +62,7 @@ export class DashboardComponent implements OnInit {
   selectedType: string | undefined;
   selectedMoment: string | undefined;
   selectedGender: string | undefined;
+  selectedMinAge: number | undefined;
 
   complaints$: any[] = [];
 
@@ -79,6 +80,7 @@ export class DashboardComponent implements OnInit {
     this.selectedType = undefined;
     this.selectedMoment = undefined;
     this.selectedGender = undefined;
+    this.selectedAge = undefined;
     this.getComplaints();
   }
 
@@ -92,12 +94,14 @@ export class DashboardComponent implements OnInit {
     console.log('Selected Type:', this.selectedType);
     console.log('Selected Moment:', this.selectedMoment);
     console.log('Selected Gender:', this.selectedGender);
+    console.log('Selected Age:', this.selectedAge);
     this.complaintService
       .getComplaints(
         this.selectedPlace,
         this.selectedType,
         this.selectedMoment,
-        this.selectedGender
+        this.selectedGender,
+        this.selectedAge
       )
       .subscribe(
         (complaints) => {
