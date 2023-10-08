@@ -62,7 +62,7 @@ export class DashboardComponent implements OnInit {
   selectedType: string | undefined;
   selectedMoment: string | undefined;
   selectedGender: string | undefined;
-  selectedMinAge: number | undefined;
+  selectedAge: number = 0;
 
   complaints$: any[] = [];
 
@@ -80,13 +80,18 @@ export class DashboardComponent implements OnInit {
     this.selectedType = undefined;
     this.selectedMoment = undefined;
     this.selectedGender = undefined;
-    this.selectedAge = undefined;
+    this.selectedAge = 0;
     this.getComplaints();
   }
 
   formatDateTime(datetime: string): string {
     const date = new Date(datetime);
     return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+  }
+
+  onAgeRangeChange(event: Event): void {
+    const value = parseInt((event.target as HTMLInputElement).value, 10);
+    this.selectedAge = value;
   }
 
   getComplaints(): void {

@@ -15,8 +15,7 @@ export class ComplaintService {
     type?: string,
     moment?: string,
     gender?: string,
-    minAge?: number,
-    maxAge?: number
+    age?: number
   ): Observable<any[]> {
     let params = new HttpParams();
     if (place) {
@@ -31,11 +30,8 @@ export class ComplaintService {
     if (gender) {
       params = params.set('victim_gender', gender);
     }
-    if (minAge) {
-      params = params.set('minAge', minAge.toString());
-    }
-    if (maxAge) {
-      params = params.set('maxAge', maxAge.toString());
+    if (age) {
+      params = params.set('victim_age', age.toString());
     }
     return this.http.get<any[]>(`${this.apiUrl}/complaints`, { params });
   }

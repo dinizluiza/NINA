@@ -45,16 +45,10 @@
       </select>
 
       <label for="ageFilter">Faixa etária:</label>
-      <mat-slider (change)="onAgeRangeChangeMin($event)">
+      <mat-slider (change)="onAgeRangeChange($event)">
         <input matSliderThumb />
       </mat-slider>
-      <mat-slider (change)="onAgeRangeChangeMax($event)">
-        <input matSliderThumb />
-      </mat-slider>
-      <span
-        >Faixa etária selecionada: {{ selectedMinAge }} -
-        {{ selectedMaxAge }}</span
-      >
+      <span>Idade selecionada: {{ selectedAge }}</span>
       <button type="button" (click)="clearFilters()">Limpar Filtros</button>
       <button type="button" (click)="getComplaints()">Buscar</button>
     </form>
