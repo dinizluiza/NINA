@@ -1,79 +1,146 @@
-<div class="container">
-  <h2>Dashboard</h2>
-  <div class="filters">
-    <form>
-      <label for="placeFilter">Local das Ocorrências:</label>
-      <select
-        id="placeFilter"
-        [(ngModel)]="selectedPlace"
-        [ngModelOptions]="{ standalone: true }"
+<div
+  id="#main"
+  class="py-28 overflow-x-hidden flex flex-col items-center gap-20"
+>
+  <div
+    id="#container"
+    class="w-[80%] rounded-[16px] bg-white px-[60px] py-[40px] shadow-md"
+  >
+    <h1 class="text-[#5B43D9]" style="font-size: 48px; font-weight: 700">
+      Dashboard
+    </h1>
+    <div id="#filters" class="w-full mt-10">
+      <form
+        class="flex 2xl:flex-nowrap flex-wrap 2xl:justify-between justify-center items-end gap-10"
       >
-        <option *ngFor="let place of places" [value]="placeMapping[place]">
-          {{ place }}
-        </option>
-      </select>
-      <label for="typeFilter">Tipo de Importunação:</label>
-      <select
-        id="typeFilter"
-        [(ngModel)]="selectedType"
-        [ngModelOptions]="{ standalone: true }"
-      >
-        <option *ngFor="let type of types" [value]="typeMapping[type]">
-          {{ type }}
-        </option>
-      </select>
-      <label for="momentFilter">Momento da Importunação:</label>
-      <select
-        id="momentFilter"
-        [(ngModel)]="selectedMoment"
-        [ngModelOptions]="{ standalone: true }"
-      >
-        <option *ngFor="let moment of moments" [value]="momentMapping[moment]">
-          {{ moment }}
-        </option>
-      </select>
+        <div class="flex flex-col gap-2">
+          <label for="placeFilter">Local das Ocorrências:</label>
+          <select
+            id="placeFilter"
+            [(ngModel)]="selectedPlace"
+            [ngModelOptions]="{ standalone: true }"
+          >
+            <option *ngFor="let place of places" [value]="placeMapping[place]">
+              {{ place }}
+            </option>
+          </select>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="typeFilter">Tipo de Importunação:</label>
+          <select
+            id="typeFilter"
+            [(ngModel)]="selectedType"
+            [ngModelOptions]="{ standalone: true }"
+          >
+            <option *ngFor="let type of types" [value]="typeMapping[type]">
+              {{ type }}
+            </option>
+          </select>
+        </div>
 
-      <label for="genderFilter">Gênero:</label>
-      <select
-        id="genderFilter"
-        [(ngModel)]="selectedGender"
-        [ngModelOptions]="{ standalone: true }"
-      >
-        <option *ngFor="let gender of genders" [value]="genderMapping[gender]">
-          {{ gender }}
-        </option>
-      </select>
-
-      <label for="ageFilter">Faixa etária:</label>
-
-      <button type="button" (click)="clearFilters()">Limpar Filtros</button>
-      <button type="button" (click)="getComplaints()">Buscar</button>
-    </form>
+        <div class="flex flex-col gap-2">
+          <label for="momentFilter">Momento da Importunação:</label>
+          <select
+            id="momentFilter"
+            [(ngModel)]="selectedMoment"
+            [ngModelOptions]="{ standalone: true }"
+          >
+            <option
+              *ngFor="let moment of moments"
+              [value]="momentMapping[moment]"
+            >
+              {{ moment }}
+            </option>
+          </select>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="genderFilter">Gênero:</label>
+          <select
+            id="genderFilter"
+            [(ngModel)]="selectedGender"
+            [ngModelOptions]="{ standalone: true }"
+          >
+            <option
+              *ngFor="let gender of genders"
+              [value]="genderMapping[gender]"
+            >
+              {{ gender }}
+            </option>
+          </select>
+        </div>
+        <div class="flex flex-col">
+          <span
+            ><label for="ageFilter">Idade: </label>
+            <span>{{ selectedAge }}</span></span
+          >
+          <mat-slider (change)="onAgeRangeChange($event)">
+            <input matSliderThumb />
+          </mat-slider>
+        </div>
+        <div class="mb-3 space-x-5 flex flex-nowrap font-medium">
+          <button
+            type="button"
+            (click)="clearFilters()"
+            class="text-[#5B43D9] underline underline-offset-4"
+          >
+            Limpar filtros
+          </button>
+          <button
+            type="button"
+            (click)="getComplaints()"
+            class="text-white bg-[#5B43D9] py-[8px] px-[24px] rounded-[8px]"
+          >
+            Filtrar
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Local</th>
-        <th>Tipo</th>
-        <th>Momento</th>
-        <th>Data e Hora</th>
-        <th>Gênero</th>
-        <th>Idade</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let complaint of complaints$">
-        <td>{{ complaint._id }}</td>
-        <td>{{ complaint.place }}</td>
-        <td>{{ complaint.description }}</td>
-        <td>{{ complaint.type.join(", ") }}</td>
-        <td>{{ complaint.at_moment ? "No momento" : "Após o ocorrido" }}</td>
-        <td>{{ formatDateTime(complaint.datetime) }}</td>
-        <td>{{ complaint.victim_gender }}</td>
-        <td>{{ complaint.victim_age }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div
+    class="2xl:w-[25%] xl:w-[50%] w-[80%] flex flex-col shadow-2xl rounded-[15px]"
+  >
+    <h2
+      class="text-[#5B43D9] pb-[15px] pt-[30px] px-[30px]"
+      style="font-size: 41px; font-weight: 700"
+    >
+      Ocorrências
+    </h2>
+    <div
+      class="w-full bg-[#303030] text-white flex flex-col items-center py-[30px] rounded-b-[15px]"
+    >
+      <div *ngFor="let complaint of complaints$" class="w-[85%] py-3">
+        <p
+          class="uppercase font-bold text-[15px]"
+          style="
+            max-width: 180px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          "
+        >
+          IDD{{ complaint._id }}
+        </p>
+        <div class="flex gap-1 text-[14px]">
+          <p>{{ formatDateTime(complaint.datetime) }}</p>
+          <p class="text-[20px]">•</p>
+          <p>{{ replacePlaceName(complaint.place) }}</p>
+        </div>
+        <p
+          class="bg-black bg-opacity-30 rounded-[100px] text-[#9784FF] text-[12px] px-2 py-1 w-fit"
+        >
+          {{ replaceTypeName(complaint.type) }}
+        </p>
+
+        <!-- <p>{{ complaint.place }}</p>
+        <p>{{ complaint.description }}</p>
+        <p>{{ complaint.type.join(", ") }}</p>
+        <p>{{ complaint.at_moment ? "No momento" : "Após o ocorrido" }}</p>
+        <p>{{ formatDateTime(complaint.datetime) }}</p>
+        <p>{{ complaint.victim_gender }}</p>
+        <p>{{ complaint.victim_age }}</p> -->
+        <div class="h-[1px] w-full bg-[#F9F9F9]"></div>
+      </div>
+    </div>
+  </div>
 </div>
