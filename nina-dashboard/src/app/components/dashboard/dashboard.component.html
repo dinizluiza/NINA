@@ -1,0 +1,79 @@
+<div class="container">
+  <h2>Dashboard</h2>
+  <div class="filters">
+    <form>
+      <label for="placeFilter">Local das Ocorrências:</label>
+      <select
+        id="placeFilter"
+        [(ngModel)]="selectedPlace"
+        [ngModelOptions]="{ standalone: true }"
+      >
+        <option *ngFor="let place of places" [value]="placeMapping[place]">
+          {{ place }}
+        </option>
+      </select>
+      <label for="typeFilter">Tipo de Importunação:</label>
+      <select
+        id="typeFilter"
+        [(ngModel)]="selectedType"
+        [ngModelOptions]="{ standalone: true }"
+      >
+        <option *ngFor="let type of types" [value]="typeMapping[type]">
+          {{ type }}
+        </option>
+      </select>
+      <label for="momentFilter">Momento da Importunação:</label>
+      <select
+        id="momentFilter"
+        [(ngModel)]="selectedMoment"
+        [ngModelOptions]="{ standalone: true }"
+      >
+        <option *ngFor="let moment of moments" [value]="momentMapping[moment]">
+          {{ moment }}
+        </option>
+      </select>
+
+      <label for="genderFilter">Gênero:</label>
+      <select
+        id="genderFilter"
+        [(ngModel)]="selectedGender"
+        [ngModelOptions]="{ standalone: true }"
+      >
+        <option *ngFor="let gender of genders" [value]="genderMapping[gender]">
+          {{ gender }}
+        </option>
+      </select>
+
+      <label for="ageFilter">Faixa etária:</label>
+
+      <button type="button" (click)="clearFilters()">Limpar Filtros</button>
+      <button type="button" (click)="getComplaints()">Buscar</button>
+    </form>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Local</th>
+        <th>Tipo</th>
+        <th>Momento</th>
+        <th>Data e Hora</th>
+        <th>Gênero</th>
+        <th>Idade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let complaint of complaints$">
+        <td>{{ complaint._id }}</td>
+        <td>{{ complaint.place }}</td>
+        <td>{{ complaint.description }}</td>
+        <td>{{ complaint.type.join(", ") }}</td>
+        <td>{{ complaint.at_moment ? "No momento" : "Após o ocorrido" }}</td>
+        <td>{{ formatDateTime(complaint.datetime) }}</td>
+        <td>{{ complaint.victim_gender }}</td>
+        <td>{{ complaint.victim_age }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
