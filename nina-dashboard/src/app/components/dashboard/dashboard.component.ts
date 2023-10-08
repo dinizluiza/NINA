@@ -86,12 +86,41 @@ export class DashboardComponent implements OnInit {
 
   formatDateTime(datetime: string): string {
     const date = new Date(datetime);
-    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+    // return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+    return `${date.toLocaleDateString()}`;
   }
 
   onAgeRangeChange(event: Event): void {
     const value = parseInt((event.target as HTMLInputElement).value, 10);
     this.selectedAge = value;
+  }
+
+  replacePlaceName(place: string): string {
+    if (place === 'bus') {
+      return 'Ônibus';
+    } else if (place === 'bus_terminal') {
+      return 'Terminal de ônibus';
+    } else if (place === 'subway') {
+      return 'Metrô';
+    } else if (place === 'bus_stop') {
+      return 'Parada de ônibus';
+    } else if (place === 'subway_terminal') {
+      return 'Estação de metrô';
+    }
+    return place;
+  }
+
+  replaceTypeName(types: string[]): string {
+    const typeMapping: { [key: string]: string } = {
+      groping: 'Se tocando/mostrando',
+      stalking: 'Perseguição',
+      unwanted_photos: 'Fotos não autorizadas',
+      verbal_aggression: 'Intimidação',
+      physical_aggression: 'Encoxar/apalpar',
+    };
+
+    const replacedTypes = types.map((type) => typeMapping[type] || type);
+    return replacedTypes.join(', ');
   }
 
   getComplaints(): void {
